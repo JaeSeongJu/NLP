@@ -124,3 +124,30 @@ const history = await model.fit(trainInputs, trainLabels, {
       ),
   },
 });
+
+// 평가
+
+//모델 평가
+// model.evaluate(trainInputs, trainLabels).print();
+
+// 예측
+
+//추론입력
+const input = "나는 너무 슬퍼";
+//입력을 숫자로 변경
+let inferInput = input.split(" ").map((word) => {
+  return parseInt(getKeyByValue(idToWord, word));
+});
+//문장의 길이를 모두 동일하게 변경 (최대길이 4)
+const inputLength = inferInput.length;
+inferInput.length = 4;
+inferInput.fill(0, inputLength);
+//2D 텐서로 변환 (batch size 1 추가)
+inferInput = tf.tensor2d(inferInput, [1, 4]);
+//긍정,부정 추론
+const prediction = model.predict(inferInput);
+//확률의 max 값을 추론 값으로 결정
+const lastPrediction = prediction.argMax(1);
+//각 예측 값에 대한 label string
+const val = lastPrediction.arraySync()[0];
+console.log(`${val} : ${idToLabels[val]}`);
