@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@tensorflow/tfjs": "^2.8.5"
+    "@tensorflow/tfjs": "^2.8.5",
+    "tokenizers": "^0.7.0"
   }
 }
